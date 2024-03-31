@@ -3,7 +3,6 @@ module github.com/scandar/mal-cli
 go 1.22.0
 
 require (
-	github.com/go-chi/chi/v5 v5.0.12
 	github.com/spf13/cobra v1.8.0
 	github.com/zalando/go-keyring v0.2.4
 	go.uber.org/zap v1.27.0
