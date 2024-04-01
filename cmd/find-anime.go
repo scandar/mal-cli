@@ -11,9 +11,10 @@ import (
 
 var p *int
 var animeCMD = &cobra.Command{
-	Use:   "anime [QUERY]",
-	Short: "Authenticate with MyAnimeList",
-	Args:  cobra.MinimumNArgs(1),
+	Use:     "find-anime [QUERY]",
+	Aliases: []string{"fa"},
+	Short:   "Authenticate with MyAnimeList",
+	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		logger.InitLogger(isDev)
 		if len(args) == 0 {
