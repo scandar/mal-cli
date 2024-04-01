@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var authCmd = &cobra.Command{
+var authCMD = &cobra.Command{
 	Use:   "auth",
 	Short: "Authenticate with MyAnimeList",
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -20,7 +20,7 @@ var authCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(authCmd)
+	rootCmd.AddCommand(authCMD)
 }
 
 func login() {
