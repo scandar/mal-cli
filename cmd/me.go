@@ -4,17 +4,16 @@ import (
 	"fmt"
 
 	"github.com/scandar/mal-cli/logger"
-	user_service "github.com/scandar/mal-cli/services"
+	"github.com/scandar/mal-cli/services/user_service"
 	"github.com/spf13/cobra"
 )
 
 var meCMD = &cobra.Command{
 	Use:   "me",
 	Short: "Get authenticated user info",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
 		logger.InitLogger(isDev)
 		userInfo()
-		return nil
 	},
 }
 

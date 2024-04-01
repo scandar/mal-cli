@@ -12,15 +12,14 @@ import (
 var authCMD = &cobra.Command{
 	Use:   "auth",
 	Short: "Authenticate with MyAnimeList",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
 		logger.InitLogger(isDev)
 		login()
-		return nil
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(authCMD)
+	rootCmd.AddCommand(animeCMD)
 }
 
 func login() {

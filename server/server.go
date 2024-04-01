@@ -7,7 +7,7 @@ import (
 	"github.com/scandar/mal-cli/auth"
 	"github.com/scandar/mal-cli/logger"
 	"github.com/scandar/mal-cli/secrets"
-	user_service "github.com/scandar/mal-cli/services"
+	"github.com/scandar/mal-cli/services/user_service"
 )
 
 func Start() {
