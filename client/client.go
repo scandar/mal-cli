@@ -9,9 +9,6 @@ import (
 
 var c http.Client
 var baseURL = "https://api.myanimelist.net/v2"
-var URLs = map[string]string{
-	"userInfo": "/users/@me",
-}
 
 func initRequest(method string, url string) (*http.Request, error) {
 	req, err := http.NewRequest(method, baseURL+url, nil)

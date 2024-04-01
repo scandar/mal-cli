@@ -1,11 +1,13 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/scandar/mal-cli/auth"
 	"github.com/scandar/mal-cli/logger"
 	"github.com/scandar/mal-cli/secrets"
+	user_service "github.com/scandar/mal-cli/services"
 )
 
 func Start() {
@@ -25,6 +27,13 @@ func getRoot(w http.ResponseWriter, r *http.Request) {
 	secrets.Set("access_token", token.AccessToken)
 	secrets.Set("refresh_token", token.RefreshToken)
 	log.Debug("Token saved")
+
+	userInfo, err := user_service.GetUserInfo()
+	if err != nil {
+		log.Error(err)
+	}
+
+	fmt.Printf("Logged in as: %s\n", userInfo.Name)
 
 	w.Write([]byte("<h1>Success! You can close this page and go back to the CLI.</h1>"))
 }
