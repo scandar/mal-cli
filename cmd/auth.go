@@ -19,7 +19,7 @@ var authCMD = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(animeCMD)
+	rootCmd.AddCommand(authCMD)
 }
 
 func login() {
