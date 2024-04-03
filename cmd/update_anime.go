@@ -14,9 +14,9 @@ var episodes *int
 var score *int
 
 var updateAnimeCMD = &cobra.Command{
-	Use:     "update-list [ANIME_ID]",
+	Use:     "update-anime [ANIME_ID]",
 	Args:    cobra.MinimumNArgs(1),
-	Aliases: []string{"ul"},
+	Aliases: []string{"ua"},
 	Short:   "Update an entry in the user's anime list",
 	Run: func(cmd *cobra.Command, args []string) {
 		logger.InitLogger(isDev)
