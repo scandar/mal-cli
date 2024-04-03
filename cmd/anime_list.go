@@ -8,18 +8,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var status *string
 var listAnimeCMD = &cobra.Command{
-	Use:     "list-anime",
-	Aliases: []string{"la"},
+	Use:     "anime-list",
+	Aliases: []string{"al"},
 	Short:   "Authenticated user's anime list",
 	Run: func(cmd *cobra.Command, args []string) {
 		logger.InitLogger(isDev)
-		getAnimeList(anime_service.Status(*status), p)
+		getAnimeList(anime_service.Status(*status), *p)
 	},
 }
 
 func init() {
+	p = listAnimeCMD.Flags().IntP("page", "p", 0, "Page number zero indexed")
 	status = listAnimeCMD.Flags().StringP("status", "s", "", "Anime status")
 	rootCmd.AddCommand(listAnimeCMD)
 }

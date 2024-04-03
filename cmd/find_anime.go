@@ -20,11 +20,12 @@ var findAnimeCMD = &cobra.Command{
 			fmt.Println("Please provide a query")
 			os.Exit(1)
 		}
-		searchAnime(concatArgs(args), p)
+		searchAnime(concatArgs(args), *p)
 	},
 }
 
 func init() {
+	p = findAnimeCMD.Flags().IntP("page", "p", 0, "Page number zero indexed")
 	rootCmd.AddCommand(findAnimeCMD)
 }
 

@@ -1,7 +1,10 @@
 package client
 
 import (
+	"bytes"
+	"io"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/scandar/mal-cli/secrets"
@@ -10,8 +13,8 @@ import (
 var c http.Client
 var baseURL = "https://api.myanimelist.net/v2"
 
-func initRequest(method string, url string) (*http.Request, error) {
-	req, err := http.NewRequest(method, baseURL+url, nil)
+func initRequest(method string, url string, body io.Reader) (*http.Request, error) {
+	req, err := http.NewRequest(method, baseURL+url, body)
 	if err != nil {
 		return nil, err
 	}
@@ -21,7 +24,7 @@ func initRequest(method string, url string) (*http.Request, error) {
 }
 
 func Get(url string, params map[string]string) (*http.Response, error) {
-	req, err := initRequest("GET", url)
+	req, err := initRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -33,6 +36,23 @@ func Get(url string, params map[string]string) (*http.Response, error) {
 		}
 		req.URL.RawQuery = q.Encode()
 	}
+
+	return c.Do(req)
+}
+
+func Patch(reqUrl string, params map[string]string) (*http.Response, error) {
+	data := url.Values{}
+	for key, value := range params {
+		data.Set(key, value)
+	}
+	body := bytes.NewBufferString(data.Encode())
+
+	req, err := initRequest("PATCH", reqUrl, body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	return c.Do(req)
 }

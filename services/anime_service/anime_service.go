@@ -12,6 +12,7 @@ import (
 var urls = map[string]string{
 	"anime":         "/anime",
 	"userAnimeList": "/users/@me/animelist",
+	"updateAnime":   "/anime/%d/my_list_status",
 }
 
 type Status string
@@ -61,6 +62,19 @@ type UserAnimeList struct {
 		ListStatus ListStatus `json:"list_status"`
 	} `json:"data"`
 	Paging Paging `json:"paging"`
+}
+
+type UpdateAnimeListResponse struct {
+	Status             string        `json:"status"`
+	Score              int           `json:"score"`
+	NumEpisodesWatched int           `json:"num_episodes_watched"`
+	IsRewatching       bool          `json:"is_rewatching"`
+	UpdatedAt          time.Time     `json:"updated_at"`
+	Priority           int           `json:"priority"`
+	NumTimesRewatched  int           `json:"num_times_rewatched"`
+	RewatchValue       int           `json:"rewatch_value"`
+	Tags               []interface{} `json:"tags"`
+	Comments           string        `json:"comments"`
 }
 
 func calcOffset(p int) int {
@@ -127,4 +141,39 @@ func GetUserAnimeList(status Status, p int) (UserAnimeList, error) {
 	}
 
 	return userAnimeList, nil
+}
+
+func UpdateUserAnimeList(id int, s Status, episodes int, score int) (UpdateAnimeListResponse, error) {
+	params := map[string]string{}
+	if s != None {
+		params["status"] = string(s)
+	}
+	if episodes != 0 {
+		params["num_watched_episodes"] = fmt.Sprintf("%d", episodes)
+	}
+	if score != 0 {
+		params["score"] = fmt.Sprintf("%d", score)
+	}
+
+	res, err := client.Patch(fmt.Sprintf(urls["updateAnime"], id), params)
+	if err != nil {
+		fmt.Println(err)
+		return UpdateAnimeListResponse{}, err
+	}
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return UpdateAnimeListResponse{}, err
+	}
+
+	updateAnimeListResponse := UpdateAnimeListResponse{}
+	err = json.Unmarshal(body, &updateAnimeListResponse)
+	if err != nil {
+		fmt.Println(err)
+		return UpdateAnimeListResponse{}, err
+	}
+
+	return updateAnimeListResponse, nil
 }
