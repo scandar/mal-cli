@@ -57,6 +57,15 @@ func Patch(reqUrl string, params map[string]string) (*http.Response, error) {
 	return c.Do(req)
 }
 
+func Delete(url string) (*http.Response, error) {
+	req, err := initRequest("DELETE", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return c.Do(req)
+}
+
 func main() {
 	c = http.Client{Timeout: time.Duration(1) * time.Second}
 }

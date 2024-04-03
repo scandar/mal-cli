@@ -13,6 +13,7 @@ var urls = map[string]string{
 	"anime":         "/anime",
 	"userAnimeList": "/users/@me/animelist",
 	"updateAnime":   "/anime/%d/my_list_status",
+	"deleteAnime":   "/anime/%d/my_list_status",
 }
 
 type Status string
@@ -176,4 +177,14 @@ func UpdateUserAnimeList(id int, s Status, episodes int, score int) (UpdateAnime
 	}
 
 	return updateAnimeListResponse, nil
+}
+
+func DeleteAnime(id int) (bool, error) {
+	res, err := client.Delete(fmt.Sprintf(urls["updateAnime"], id))
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+
+	return res.StatusCode == 200, nil
 }
