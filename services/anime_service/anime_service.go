@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/scandar/mal-cli/internal/client"
+	"github.com/scandar/mal-cli/internal/utils"
 	"github.com/scandar/mal-cli/services"
 )
 
@@ -16,12 +17,8 @@ var urls = map[string]string{
 	"deleteAnime":   "/anime/%d/my_list_status",
 }
 
-func calcOffset(p int) int {
-	return p * 10
-}
-
 func SearchAnime(q string, p int) (services.List, error) {
-	offset := calcOffset(p)
+	offset := utils.CalcOffset(p)
 	params := map[string]string{
 		"q":      q,
 		"offset": fmt.Sprintf("%d", offset),
@@ -51,7 +48,7 @@ func SearchAnime(q string, p int) (services.List, error) {
 }
 
 func GetUserAnimeList(status services.AnimeStatus, p int) (services.UserAnimeList, error) {
-	offset := calcOffset(p)
+	offset := utils.CalcOffset(p)
 	params := map[string]string{
 		"offset": fmt.Sprintf("%d", offset),
 	}
