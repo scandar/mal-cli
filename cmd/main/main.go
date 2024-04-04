@@ -1,7 +1,7 @@
 package main
 
-import "github.com/scandar/mal-cli/cmd"
+import "github.com/scandar/mal-cli/internal/cli"
 
 func main() {
-	cmd.Execute()
+	cli.Execute()
 }
