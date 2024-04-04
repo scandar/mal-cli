@@ -5,7 +5,7 @@ import (
 
 	"github.com/scandar/mal-cli/internal/auth"
 	"github.com/scandar/mal-cli/internal/logger"
-	"github.com/scandar/mal-cli/server"
+	"github.com/scandar/mal-cli/internal/server"
 	"github.com/spf13/cobra"
 )
 
