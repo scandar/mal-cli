@@ -118,7 +118,7 @@ func UpdateUserAnimeList(id int, s services.AnimeStatus, episodes int, score int
 }
 
 func DeleteAnime(id int) (bool, error) {
-	res, err := client.Delete(fmt.Sprintf(urls["updateAnime"], id))
+	res, err := client.Delete(fmt.Sprintf(urls["deleteAnime"], id))
 	if err != nil {
 		fmt.Println(err)
 		return false, err

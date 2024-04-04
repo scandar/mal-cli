@@ -33,7 +33,7 @@ var updateAnimeCMD = &cobra.Command{
 func init() {
 	updateAnimeCMD.Flags().StringP("status", "s", "", "Anime status")
 	updateAnimeCMD.Flags().IntP("episodes", "e", 0, "Number of episodes watched")
-	updateAnimeCMD.Flags().IntP("score", "c", 0, "Score given to the anime")
+	updateAnimeCMD.Flags().IntP("score", "o", 0, "Score given to the anime")
 	rootCmd.AddCommand(updateAnimeCMD)
 }
 
