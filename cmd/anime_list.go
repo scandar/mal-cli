@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/scandar/mal-cli/logger"
+	"github.com/scandar/mal-cli/services"
 	"github.com/scandar/mal-cli/services/anime_service"
 	"github.com/spf13/cobra"
 )
@@ -14,17 +15,19 @@ var listAnimeCMD = &cobra.Command{
 	Short:   "Authenticated user's anime list",
 	Run: func(cmd *cobra.Command, args []string) {
 		logger.InitLogger(isDev)
-		getAnimeList(anime_service.Status(*status), *p)
+		status, _ := cmd.Flags().GetString("status")
+		p, _ := cmd.Flags().GetInt("page")
+		getAnimeList(services.AnimeStatus(status), p)
 	},
 }
 
 func init() {
-	p = listAnimeCMD.Flags().IntP("page", "p", 0, "Page number zero indexed")
-	status = listAnimeCMD.Flags().StringP("status", "s", "", "Anime status")
+	listAnimeCMD.Flags().IntP("page", "p", 0, "Page number zero indexed")
+	listAnimeCMD.Flags().StringP("status", "s", "", "Anime status")
 	rootCmd.AddCommand(listAnimeCMD)
 }
 
-func getAnimeList(s anime_service.Status, p int) {
+func getAnimeList(s services.AnimeStatus, p int) {
 	log := logger.Instance
 	log.Debug("Getting user anime list")
 	log.Debugf("Status: %s, Page: %d", s, p)

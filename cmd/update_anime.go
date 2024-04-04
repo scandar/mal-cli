@@ -6,12 +6,10 @@ import (
 	"strconv"
 
 	"github.com/scandar/mal-cli/logger"
+	"github.com/scandar/mal-cli/services"
 	"github.com/scandar/mal-cli/services/anime_service"
 	"github.com/spf13/cobra"
 )
-
-var episodes *int
-var score *int
 
 var updateAnimeCMD = &cobra.Command{
 	Use:     "update-anime [ANIME_ID]",
@@ -25,18 +23,21 @@ var updateAnimeCMD = &cobra.Command{
 			fmt.Println("Invalid anime ID")
 			os.Exit(1)
 		}
-		updateAnimeList(id, anime_service.Status(*status), *episodes, *score)
+		status, _ := cmd.Flags().GetString("status")
+		episodes, _ := cmd.Flags().GetInt("episodes")
+		score, _ := cmd.Flags().GetInt("score")
+		updateAnimeList(id, services.AnimeStatus(status), episodes, score)
 	},
 }
 
 func init() {
-	status = updateAnimeCMD.Flags().StringP("status", "s", "", "Anime status")
-	episodes = updateAnimeCMD.Flags().IntP("episodes", "e", 0, "Number of episodes watched")
-	score = updateAnimeCMD.Flags().IntP("score", "c", 0, "Score given to the anime")
+	updateAnimeCMD.Flags().StringP("status", "s", "", "Anime status")
+	updateAnimeCMD.Flags().IntP("episodes", "e", 0, "Number of episodes watched")
+	updateAnimeCMD.Flags().IntP("score", "c", 0, "Score given to the anime")
 	rootCmd.AddCommand(updateAnimeCMD)
 }
 
-func updateAnimeList(id int, s anime_service.Status, episodes int, score int) {
+func updateAnimeList(id int, s services.AnimeStatus, episodes int, score int) {
 	log := logger.Instance
 	log.Debug("Updating user anime list")
 	log.Debugf("Anime ID: %d, Status: %s, Episodes: %d, Score: %d", id, s, episodes, score)

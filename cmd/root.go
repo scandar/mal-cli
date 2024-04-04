@@ -8,8 +8,6 @@ import (
 )
 
 var isDev bool
-var p *int
-var status *string
 
 var rootCmd = &cobra.Command{
 	Use:   "mal-cli",
