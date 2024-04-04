@@ -11,10 +11,9 @@ var isDev bool
 
 var rootCmd = &cobra.Command{
 	Use:   "mal-cli",
-	Short: "A CLI tool for MyAnimeList",
-	Long:  `A CLI tool for MyAnimeList`,
+	Short: "A CLI tool to managa your MyAnimeList lists",
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		cmd.Help()
 	},
 }
 
