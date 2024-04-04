@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/scandar/mal-cli/client"
+	"github.com/scandar/mal-cli/internal/client"
 	"github.com/scandar/mal-cli/services"
 )
 

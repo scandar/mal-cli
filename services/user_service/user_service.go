@@ -6,7 +6,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/scandar/mal-cli/client"
+	"github.com/scandar/mal-cli/internal/client"
 )
 
 var urls = map[string]string{
