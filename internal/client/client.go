@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/scandar/mal-cli/secrets"
+	"github.com/scandar/mal-cli/internal/secrets"
 )
 
 var c http.Client

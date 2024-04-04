@@ -6,7 +6,7 @@ import (
 
 	"github.com/scandar/mal-cli/internal/auth"
 	"github.com/scandar/mal-cli/internal/logger"
-	"github.com/scandar/mal-cli/secrets"
+	"github.com/scandar/mal-cli/internal/secrets"
 	"github.com/scandar/mal-cli/services/user_service"
 )
 
