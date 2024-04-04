@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/scandar/mal-cli/logger"
+	"github.com/scandar/mal-cli/internal/logger"
 	"github.com/scandar/mal-cli/services/user_service"
 	"github.com/spf13/cobra"
 )

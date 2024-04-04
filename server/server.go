@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/scandar/mal-cli/internal/auth"
-	"github.com/scandar/mal-cli/logger"
+	"github.com/scandar/mal-cli/internal/logger"
 	"github.com/scandar/mal-cli/secrets"
 	"github.com/scandar/mal-cli/services/user_service"
 )

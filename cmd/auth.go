@@ -4,7 +4,7 @@ import (
 	"os/exec"
 
 	"github.com/scandar/mal-cli/internal/auth"
-	"github.com/scandar/mal-cli/logger"
+	"github.com/scandar/mal-cli/internal/logger"
 	"github.com/scandar/mal-cli/server"
 	"github.com/spf13/cobra"
 )
