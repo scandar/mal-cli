@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/scandar/mal-cli/internal/logger"
+	"github.com/scandar/mal-cli/internal/utils"
 	"github.com/scandar/mal-cli/services/manga_service"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +22,7 @@ var findMangaCMD = &cobra.Command{
 			os.Exit(1)
 		}
 		p, _ := cmd.Flags().GetInt("page")
-		searchManga(concatArgs(args), p)
+		searchManga(utils.ConcatArgs(args), p)
 	},
 }
 

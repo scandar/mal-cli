@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/scandar/mal-cli/internal/logger"
+	"github.com/scandar/mal-cli/internal/utils"
 	"github.com/scandar/mal-cli/services/anime_service"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +22,7 @@ var findAnimeCMD = &cobra.Command{
 			os.Exit(1)
 		}
 		p, _ := cmd.Flags().GetInt("page")
-		searchAnime(concatArgs(args), p)
+		searchAnime(utils.ConcatArgs(args), p)
 	},
 }
 
@@ -43,12 +44,4 @@ func searchAnime(q string, p int) {
 	for _, anime := range animeList.Data {
 		fmt.Printf("ID: %d, Title: %s\n", anime.Node.ID, anime.Node.Title)
 	}
-}
-
-func concatArgs(args []string) string {
-	q := ""
-	for _, arg := range args {
-		q += arg + " "
-	}
-	return q
 }
