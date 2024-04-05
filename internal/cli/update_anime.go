@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	"github.com/scandar/mal-cli/internal/logger"
-	"github.com/scandar/mal-cli/services"
-	"github.com/scandar/mal-cli/services/anime_service"
+	"github.com/scandar/mal-cli/internal/services"
+	"github.com/scandar/mal-cli/internal/services/anime_service"
 	"github.com/spf13/cobra"
 )
 

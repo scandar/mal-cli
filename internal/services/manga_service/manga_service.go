@@ -6,8 +6,8 @@ import (
 	"io"
 
 	"github.com/scandar/mal-cli/internal/client"
+	"github.com/scandar/mal-cli/internal/services"
 	"github.com/scandar/mal-cli/internal/utils"
-	"github.com/scandar/mal-cli/services"
 )
 
 var urls = map[string]string{

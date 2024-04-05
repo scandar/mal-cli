@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/scandar/mal-cli/internal/logger"
-	"github.com/scandar/mal-cli/services/user_service"
+	"github.com/scandar/mal-cli/internal/services/user_service"
 	"github.com/spf13/cobra"
 )
 
