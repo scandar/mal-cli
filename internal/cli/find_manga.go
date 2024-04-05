@@ -16,12 +16,14 @@ var findMangaCMD = &cobra.Command{
 	Short:   "Search for manga by name",
 	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		isDebug, _ := cmd.Flags().GetBool("debug")
+		p, _ := cmd.Flags().GetInt("page")
 		if len(args) == 0 {
 			fmt.Println("Please provide a query")
 			os.Exit(1)
 		}
-		p, _ := cmd.Flags().GetInt("page")
+
+		logger.InitLogger(isDebug)
 		searchManga(utils.ConcatArgs(args), p)
 	},
 }

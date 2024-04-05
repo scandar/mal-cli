@@ -16,12 +16,14 @@ var findAnimeCMD = &cobra.Command{
 	Short:   "Search for anime by name",
 	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		p, _ := cmd.Flags().GetInt("page")
+		isDebug, _ := cmd.Flags().GetBool("debug")
+		logger.InitLogger(isDebug)
 		if len(args) == 0 {
 			fmt.Println("Please provide a query")
 			os.Exit(1)
 		}
-		p, _ := cmd.Flags().GetInt("page")
+
 		searchAnime(utils.ConcatArgs(args), p)
 	},
 }

@@ -13,7 +13,8 @@ var authCMD = &cobra.Command{
 	Use:   "auth",
 	Short: "Authenticate with MyAnimeList",
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		isDebug, _ := cmd.Flags().GetBool("debug")
+		logger.InitLogger(isDebug)
 		login()
 	},
 }

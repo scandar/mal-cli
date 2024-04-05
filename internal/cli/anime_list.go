@@ -14,9 +14,11 @@ var listAnimeCMD = &cobra.Command{
 	Aliases: []string{"al"},
 	Short:   "Authenticated user's anime list",
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		isDebug, _ := cmd.Flags().GetBool("debug")
 		status, _ := cmd.Flags().GetString("status")
 		p, _ := cmd.Flags().GetInt("page")
+
+		logger.InitLogger(isDebug)
 		getAnimeList(services.AnimeStatus(status), p)
 	},
 }

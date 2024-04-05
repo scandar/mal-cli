@@ -12,7 +12,8 @@ var meCMD = &cobra.Command{
 	Use:   "me",
 	Short: "Get authenticated user info",
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		isDebug, _ := cmd.Flags().GetBool("debug")
+		logger.InitLogger(isDebug)
 		userInfo()
 	},
 }

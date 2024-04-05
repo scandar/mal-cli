@@ -14,9 +14,11 @@ var listMangaCMD = &cobra.Command{
 	Aliases: []string{"ml"},
 	Short:   "Authenticated user's manga list",
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		isDebug, _ := cmd.Flags().GetBool("debug")
 		status, _ := cmd.Flags().GetString("status")
 		p, _ := cmd.Flags().GetInt("page")
+		logger.InitLogger(isDebug)
+
 		getMangaList(services.MangaStatus(status), p)
 	},
 }

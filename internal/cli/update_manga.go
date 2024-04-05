@@ -17,7 +17,8 @@ var updateMangaCMD = &cobra.Command{
 	Aliases: []string{"um"},
 	Short:   "Update an entry in the user's manga list",
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		isDebug, _ := cmd.Flags().GetBool("debug")
+		logger.InitLogger(isDebug)
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
 			fmt.Println("Invalid manga ID")

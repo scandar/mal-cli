@@ -16,12 +16,14 @@ var deleteAnimeCMD = &cobra.Command{
 	Aliases: []string{"da"},
 	Short:   "Delete an entry from the user's anime list",
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.InitLogger(isDev)
+		isDebug, _ := cmd.Flags().GetBool("debug")
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
 			fmt.Println("Invalid anime ID")
 			os.Exit(1)
 		}
+
+		logger.InitLogger(isDebug)
 		deleteAnime(id)
 	},
 }

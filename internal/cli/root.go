@@ -7,8 +7,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var isDev bool
-
 var rootCmd = &cobra.Command{
 	Use:   "mal-cli",
 	Short: "A CLI tool to managa your MyAnimeList lists",
@@ -18,7 +16,7 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	rootCmd.PersistentFlags().BoolVarP(&isDev, "dev", "d", false, "Enable development logs")
+	rootCmd.PersistentFlags().BoolP("debug", "d", false, "Enable debug logs")
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
