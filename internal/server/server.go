@@ -1,39 +1,50 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
+	"time"
 
-	"github.com/scandar/mal-cli/internal/auth"
 	"github.com/scandar/mal-cli/internal/logger"
-	"github.com/scandar/mal-cli/internal/secrets"
-	"github.com/scandar/mal-cli/internal/services/user_service"
 )
 
-func Start() {
-	http.HandleFunc("/", getRoot)
-	http.ListenAndServe(":9090", nil)
+type Code struct {
+	Code  string
+	State string
 }
 
-func getRoot(w http.ResponseWriter, r *http.Request) {
+var code = make(chan Code)
+
+func GetCode() Code {
+	s := http.Server{Addr: ":9090"}
+	http.HandleFunc("/", rootHandler)
+	go s.ListenAndServe()
+
+	return waitForCode()
+}
+
+func rootHandler(w http.ResponseWriter, r *http.Request) {
 	log := logger.Instance
-	code := r.URL.Query().Get("code")
-	state := r.URL.Query().Get("state")
+	c := r.URL.Query().Get("code")
+	s := r.URL.Query().Get("state")
 
-	log.Debug("Code: ", code)
-	log.Debug("State: ", state)
+	log.Debug("Code: ", c)
+	log.Debug("State: ", s)
 
-	token := auth.Exchange(state, code)
-	secrets.Set("access_token", token.AccessToken)
-	secrets.Set("refresh_token", token.RefreshToken)
-	log.Debug("Token saved")
-
-	userInfo, err := user_service.GetUserInfo()
-	if err != nil {
-		log.Error(err)
-	}
-
-	fmt.Printf("Logged in as: %s\n", userInfo.Name)
+	code <- Code{Code: c, State: s}
 
 	w.Write([]byte("<h1>Success! You can close this page and go back to the CLI.</h1>"))
+}
+
+func waitForCode() Code {
+	log := logger.Instance
+	log.Debug("Waiting for code")
+	for c := range code {
+		time.Sleep(10 * time.Millisecond)
+
+		if c.Code != "" {
+			return c
+		}
+	}
+
+	return Code{}
 }
