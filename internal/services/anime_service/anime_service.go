@@ -1,13 +1,8 @@
 package anime_service
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
-
-	"github.com/scandar/mal-cli/internal/client"
 	"github.com/scandar/mal-cli/internal/services"
-	"github.com/scandar/mal-cli/internal/utils"
+	"github.com/scandar/mal-cli/internal/services/shared_service"
 )
 
 var urls = map[string]string{
@@ -18,108 +13,22 @@ var urls = map[string]string{
 }
 
 func SearchAnime(q string, p int) (services.List, error) {
-	offset := utils.CalcOffset(p)
-	params := map[string]string{
-		"q":      q,
-		"offset": fmt.Sprintf("%d", offset),
-		"limit":  "10",
-	}
-	res, err := client.Get(urls["anime"], params)
-	if err != nil {
-		fmt.Println(err)
-		return services.List{}, err
-	}
-	defer res.Body.Close()
-
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println(err)
-		return services.List{}, err
-	}
-
-	animeList := services.List{}
-	err = json.Unmarshal(body, &animeList)
-	if err != nil {
-		fmt.Println(err)
-		return services.List{}, err
-	}
-
-	return animeList, nil
+	d := shared_service.SearchDTO{Query: q, Page: p}
+	return shared_service.Search(urls["anime"], d)
 }
 
 func GetUserAnimeList(status services.AnimeStatus, p int) (services.UserAnimeList, error) {
-	offset := utils.CalcOffset(p)
-	params := map[string]string{
-		"offset": fmt.Sprintf("%d", offset),
-	}
-	if status != services.None {
-		params["status"] = string(status)
-	}
-
-	res, err := client.Get(urls["userAnimeList"], params)
-	if err != nil {
-		fmt.Println(err)
-		return services.UserAnimeList{}, err
-	}
-	defer res.Body.Close()
-
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println(err)
-		return services.UserAnimeList{}, err
-	}
-
-	userAnimeList := services.UserAnimeList{}
-	err = json.Unmarshal(body, &userAnimeList)
-	if err != nil {
-		fmt.Println(err)
-		return services.UserAnimeList{}, err
-	}
-
-	return userAnimeList, nil
+	l := services.UserAnimeList{}
+	d := shared_service.GetListDTO{Status: string(status), Page: p}
+	return shared_service.GetList(l, urls["userAnimeList"], d)
 }
 
 func UpdateUserAnimeList(id int, s services.AnimeStatus, episodes int, score int) (services.UpdateAnimeListResponse, error) {
-	params := map[string]string{}
-	if s != services.None {
-		params["status"] = string(s)
-	}
-	if episodes != 0 {
-		params["num_watched_episodes"] = fmt.Sprintf("%d", episodes)
-	}
-	if score != 0 {
-		params["score"] = fmt.Sprintf("%d", score)
-	}
-
-	res, err := client.Patch(fmt.Sprintf(urls["updateAnime"], id), params)
-	if err != nil {
-		fmt.Println(err)
-		return services.UpdateAnimeListResponse{}, err
-	}
-	defer res.Body.Close()
-
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println(err)
-		return services.UpdateAnimeListResponse{}, err
-	}
-
-	updateAnimeListResponse := services.UpdateAnimeListResponse{}
-	err = json.Unmarshal(body, &updateAnimeListResponse)
-	if err != nil {
-		fmt.Println(err)
-		return services.UpdateAnimeListResponse{}, err
-	}
-
-	return updateAnimeListResponse, nil
+	l := services.UpdateAnimeListResponse{}
+	d := shared_service.UpdateListDTO{Status: string(s), Episodes: episodes, Score: score}
+	return shared_service.UpdateList(l, urls["updateAnime"], id, d)
 }
 
 func DeleteAnime(id int) (bool, error) {
-	res, err := client.Delete(fmt.Sprintf(urls["deleteAnime"], id))
-	if err != nil {
-		fmt.Println(err)
-		return false, err
-	}
-
-	return res.StatusCode == 200, nil
+	return shared_service.Delete(urls["deleteAnime"], id)
 }
