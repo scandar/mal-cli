@@ -1,8 +1,9 @@
-package secrets
+package secrets_test
 
 import (
 	"testing"
 
+	"github.com/scandar/mal-cli/internal/secrets"
 	"github.com/zalando/go-keyring"
 )
 
@@ -10,12 +11,12 @@ import (
 // Then it calls secrets.Get with the same key and expects the same value.
 func TestSetGet(t *testing.T) {
 	keyring.MockInit()
-	err := Set("testKey", "testValue")
+	err := secrets.Set("testKey", "testValue")
 	if err != nil {
 		t.Errorf("Expected no error, got %s", err)
 	}
 
-	val, err := Get("testKey")
+	val, err := secrets.Get("testKey")
 	if err != nil {
 		t.Errorf("Expected no error, got %s", err)
 	}
@@ -29,16 +30,16 @@ func TestSetGet(t *testing.T) {
 // same key and expects an empty string.
 func TestDelete(t *testing.T) {
 	keyring.MockInit()
-	err := Set("testKey", "testValue")
+	err := secrets.Set("testKey", "testValue")
 	if err != nil {
 		t.Errorf("Expected no error, got %s", err)
 	}
-	err = Delete("testKey")
+	err = secrets.Delete("testKey")
 	if err != nil {
 		t.Errorf("Expected no error, got %s", err)
 	}
 
-	val, err := Get("testKey")
+	val, err := secrets.Get("testKey")
 	if err == nil {
 		t.Errorf("Expected error, got nil")
 	}
@@ -51,7 +52,7 @@ func TestDelete(t *testing.T) {
 // with a key and a value and expects the error to be printed.
 func TestSetError(t *testing.T) {
 	keyring.MockInitWithError(keyring.ErrNotFound)
-	err := Set("testKey", "testValue")
+	err := secrets.Set("testKey", "testValue")
 	if err == nil {
 		t.Error("Expected error, got nil")
 	}
