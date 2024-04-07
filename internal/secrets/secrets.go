@@ -1,32 +1,17 @@
 package secrets
 
-import (
-	"fmt"
-
-	"github.com/zalando/go-keyring"
-)
+import "github.com/zalando/go-keyring"
 
 var service = "mal-cli"
 
-func Set(key string, val string) {
-	err := keyring.Set(service, key, val)
-	if err != nil {
-		fmt.Println(err)
-	}
+func Set(key string, val string) error {
+	return keyring.Set(service, key, val)
 }
 
-func Get(key string) string {
-	secret, err := keyring.Get(service, key)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	return secret
+func Get(key string) (string, error) {
+	return keyring.Get(service, key)
 }
 
-func Delete(key string) {
-	err := keyring.Delete(service, key)
-	if err != nil {
-		fmt.Println(err)
-	}
+func Delete(key string) error {
+	return keyring.Delete(service, key)
 }

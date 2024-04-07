@@ -45,8 +45,14 @@ func exchangeToken(code server.Code) *oauth2.Token {
 
 func saveToken(token *oauth2.Token) {
 	log := logger.Instance
-	secrets.Set("access_token", token.AccessToken)
-	secrets.Set("refresh_token", token.RefreshToken)
+	err := secrets.Set("access_token", token.AccessToken)
+	if err != nil {
+		log.Error(fmt.Sprintf("Error saving access token: %s", err))
+	}
+	err = secrets.Set("refresh_token", token.RefreshToken)
+	if err != nil {
+		log.Error(fmt.Sprintf("Error saving refresh token: %s", err))
+	}
 	log.Debug("Token saved")
 }
 

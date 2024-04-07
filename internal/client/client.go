@@ -14,12 +14,16 @@ var c http.Client
 var baseURL = "https://api.myanimelist.net/v2"
 
 func initRequest(method string, url string, body io.Reader) (*http.Request, error) {
+	token, err := secrets.Get("access_token")
+	if err != nil {
+		return nil, err
+	}
 	req, err := http.NewRequest(method, baseURL+url, body)
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Add("Accept", `application/json`)
-	req.Header.Add("Authorization", "Bearer "+secrets.Get("access_token"))
+	req.Header.Add("Authorization", "Bearer "+token)
 	return req, nil
 }
 
