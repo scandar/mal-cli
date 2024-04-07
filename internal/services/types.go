@@ -104,3 +104,33 @@ type UpdateMangaListResponse struct {
 	Tags            []interface{} `json:"tags"`
 	Comments        string        `json:"comments"`
 }
+
+type Details struct {
+	ID          int    `json:"id"`
+	Title       string `json:"title"`
+	MainPicture struct {
+		Medium string `json:"medium"`
+		Large  string `json:"large"`
+	} `json:"main_picture"`
+	Synopsis string  `json:"synopsis"`
+	Mean     float64 `json:"mean"`
+	Rank     int     `json:"rank"`
+	Status   string  `json:"status"`
+	Genres   []struct {
+		ID   int    `json:"id"`
+		Name string `json:"name"`
+	} `json:"genres"`
+	MyListStatus struct {
+		Status             string    `json:"status"`
+		Score              int       `json:"score"`
+		NumEpisodesWatched int       `json:"num_episodes_watched"`
+		IsRereading        bool      `json:"is_rereading"`
+		NumVolumesRead     int       `json:"num_volumes_read"`
+		NumChaptersRead    int       `json:"num_chapters_read"`
+		IsRewatching       bool      `json:"is_rewatching"`
+		UpdatedAt          time.Time `json:"updated_at"`
+	} `json:"my_list_status"`
+	NumEpisodes int `json:"num_episodes"`
+	NumVolumes  int `json:"num_volumes"`
+	NumChapters int `json:"num_chapters"`
+}

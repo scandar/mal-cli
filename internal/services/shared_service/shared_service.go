@@ -138,3 +138,30 @@ func Delete(url string, id int) (bool, error) {
 
 	return res.StatusCode == 200, nil
 }
+
+func GetDetails(url string, id int) (services.Details, error) {
+	params := map[string]string{
+		"fields": "id,title,synopsis,mean,rank,status,genres,my_list_status,num_episodes,num_volumes,num_chapters",
+	}
+	res, err := client.Get(fmt.Sprintf(url, id), params)
+	if err != nil {
+		fmt.Println(err)
+		return services.Details{}, err
+	}
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return services.Details{}, err
+	}
+
+	details := services.Details{}
+	err = json.Unmarshal(body, &details)
+	if err != nil {
+		fmt.Println(err)
+		return services.Details{}, err
+	}
+
+	return details, nil
+}

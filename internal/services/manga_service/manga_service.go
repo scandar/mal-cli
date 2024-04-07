@@ -10,6 +10,7 @@ var urls = map[string]string{
 	"userMangaList": "/users/@me/mangalist",
 	"updateManga":   "/manga/%d/my_list_status",
 	"deleteManga":   "/manga/%d/my_list_status",
+	"mangaDetails":  "/manga/%d",
 }
 
 func SearchManga(q string, p int) (services.List, error) {
@@ -31,4 +32,8 @@ func UpdateUserMangaList(id int, s services.MangaStatus, volumes int, chapters i
 
 func DeleteManga(id int) (bool, error) {
 	return shared_service.Delete(urls["deleteManga"], id)
+}
+
+func GetMangaDetails(id int) (services.Details, error) {
+	return shared_service.GetDetails(urls["mangaDetails"], id)
 }
