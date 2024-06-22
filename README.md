@@ -5,7 +5,7 @@ mal-cli is a CLI for MyAnimeList, written in GO. It allows you to search for ani
 ## Installation
 
 ```bash
-go get github.com/scandar/mal-cli
+go install github.com/scandar/mal-cli@latest
 ```
 
 ## Usage
